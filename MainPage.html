@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"/>
+    <script defer src="index.js"></script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6" id="taskList">
+            <h2>Список задач</h2>
+            <!-- Здесь будут отображаться задачи -->
+            <!-- Пример задачи -->
+<!--            <div class="task">-->
+<!--                <h3>Название задачи</h3>-->
+<!--                <p>Описание задачи.</p>-->
+<!--                <p class="task-date">Дата создания: 01.01.2023</p>-->
+<!--                <input type="checkbox" class="task-status" id="task-1" checked>-->
+<!--                <label for="task-1">Выполнено</label>-->
+<!--                <button class="btn btn-sm btn-primary edit-task">Редактировать</button>-->
+<!--                <button class="btn btn-sm btn-danger delete-task">Удалить</button>-->
+<!--            </div>-->
+            <!-- Другие задачи добавляются здесь -->
+        </div>
+        <div class="col-6" id="addForm">
+            <h2>Добавить задачу</h2>
+            <form>
+                <div class="form-group">
+                    <label for="taskTitle">Название</label>
+                    <input type="text" class="form-control" id="taskTitle" aria-describedby="taskTitleHelp" required>
+                    <small id="taskTitleHelp" class="form-text text-muted">Введите название задачи.</small>
+                </div>
+                <div class="form-group">
+                    <label for="taskDescription">Описание</label>
+                    <textarea rows="5" id="taskDescription" class="form-control"></textarea>
+                </div>
+                <button class="btn btn-primary" id="taskAddButton">Добавить</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<!--    https://api.jquery.com/click-->
+</body>
+</html>
