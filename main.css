@@ -1,0 +1,9 @@
+/* Set all odd items to a different color (zebra-stripes) */
+.task:nth-child(odd) {
+    background: #f9f9f9;
+}
+
+.task {
+    background: #eee;
+}
+
