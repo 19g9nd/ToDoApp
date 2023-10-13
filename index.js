@@ -47,6 +47,12 @@ function isValidTask() {
     name.value = '';
     description.value = '';
 }
+
+function changeTaskStatus(taskElement, newStatus) {
+    taskElement.setAttribute('data-status', newStatus);
+}
+
+
 function createStatusButton() {
     const statusButton = document.createElement('div');
     statusButton.className = 'btn-group';
@@ -88,9 +94,6 @@ function createStatusButton() {
 
     return statusButton;
     // Обработка изменения статуса задачи
-    function changeTaskStatus(taskElement, newStatus) {
-        taskElement.setAttribute('data-status', newStatus);
-    }
 }
 
 // Добавляем обработчик события на кнопку "Добавить"
