@@ -1,3 +1,19 @@
+const taskManager = new TaskManager();
+
+document.querySelector('#taskAddButton').addEventListener('click', () => {
+    const taskName = document.querySelector('#taskTitle').value;
+    const taskDescription = document.querySelector('#taskDescription').value;
+    const newTask = new Task(taskName, taskDescription);
+    taskManager.addTask(newTask);
+    taskManager.renderTasks();
+});
+
+document.querySelector('form').addEventListener('submit', (e) => {
+    e.preventDefault(); // Предотвращаем отправку формы
+});
+
+
+
 // const tasks = document.querySelector('#taskList');
 // const name = document.querySelector('#taskTitle');
 // const description = document.querySelector('#taskDescription');

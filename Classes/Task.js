@@ -72,7 +72,9 @@ class Task {
 
         dropdownMenu.appendChild(inProgressItem);
         dropdownMenu.appendChild(doneItem);
-
+        dropdownButton.addEventListener('click', () => {
+            dropdownMenu.classList.toggle('show');
+        });
         statusButton.appendChild(dropdownButton);
         statusButton.appendChild(dropdownMenu);
 
