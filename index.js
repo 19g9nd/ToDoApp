@@ -3,9 +3,9 @@ const taskManager = new TaskManager();
 document.querySelector('#taskAddButton').addEventListener('click', () => {
     const taskName = document.querySelector('#taskTitle').value;
     const taskDescription = document.querySelector('#taskDescription').value;
-       if (!taskName.value || !taskDescription.value) {
-         return;
-     }
+    //    if (!taskName.value || !taskDescription.value) {
+    //      return;
+    //  }
     const newTask = new Task(taskName, taskDescription);
     taskManager.addTask(newTask);
      // Очищаем поля ввода
