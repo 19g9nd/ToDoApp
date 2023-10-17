@@ -1,24 +1,47 @@
 class Task {
-
-    constructor(name,description,status ='in-progress') {
-        this.name = name;
-        this.description = description;
-        this.status = status;
-        this.date = new Date();
+    #id;
+    #title;
+    #description;
+    #creationDate;
+    #completionStatus;
+    constructor(title, description, status = false) {
+        if (!this.isValid(title, description)) return; // Передаем title и description в isValid
+        this.#id = function(){
+            return Date.now().toString(36) + Math.random().toString(36).substr(2);
+        };
+        this.#title = title;
+        this.#description = description;
+        this.#creationDate = (new Date());
+        this.#completionStatus = status;
     }
+
+    isValid(title, description) {
+        return (
+            title.trim() !== '' &&
+            description.trim() !== '' //&&
+            // this.isValidDate(this.#creationDate)
+
+        );
+    }
+
+    isValidDate(date) {
+        const datePattern = /^(\d{2})[./](\d{2})[./](\d{4}) (\d{2}:\d{2}:\d{2})$/;
+        return datePattern.test(date);
+    }
+
     createTaskElement(){
         const taskElement =  document.createElement('div');
         taskElement.className = 'TaskElement';
-        taskElement.setAttribute('data-status', this.status); // По умолчанию - "В процессе"
+        taskElement.setAttribute('data-status', this.#completionStatus); // По умолчанию - "В процессе"
         // Создаем элементы для названия, описания и других данных задачи
         const taskTitle = document.createElement('h3');
-        taskTitle.textContent = this.name;
+        taskTitle.textContent = this.#title;
 
         const taskDescription = document.createElement('p');
-        taskDescription.textContent = this.description;
+        taskDescription.textContent = this.#description;
 
         const taskDate = document.createElement('p');
-        taskDate.textContent = 'Дата создания: ' + this.date.toLocaleString();
+        taskDate.textContent = 'Дата создания: ' + this.#creationDate.toLocaleString();
 
         const statusButton = this.createStatusButton(); // Функция для создания кнопки статуса
 
@@ -41,44 +64,25 @@ class Task {
         return taskElement;
     }
 
-    createStatusButton(){
+    createStatusButton() {
         const statusButton = document.createElement('div');
         statusButton.className = 'btn-group';
 
-        const dropdownButton = document.createElement('button');
-        dropdownButton.className = 'btn btn-secondary dropdown-toggle';
-        dropdownButton.textContent = this.status === 'in-progress' ? 'В процессе' : 'Выполнена';
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = this.#completionStatus;
 
-        const dropdownMenu = document.createElement('div');
-        dropdownMenu.className = 'dropdown-menu';
+        const label = document.createElement('label');
+        label.textContent = this.#completionStatus ? 'Выполнена' : 'В процессе';
 
-        const inProgressItem = document.createElement('a');
-        inProgressItem.className = 'dropdown-item';
-        inProgressItem.href = '#';
-        inProgressItem.textContent = 'В процессе';
-        inProgressItem.addEventListener('click', () => {
-            dropdownButton.textContent = 'В процессе';
-            this.status = 'in-progress';
+        checkbox.addEventListener('change', () => {
+            this.#completionStatus = checkbox.checked;
+            label.textContent = checkbox.checked ? 'Выполнена' : 'В процессе';
         });
 
-        const doneItem = document.createElement('a');
-        doneItem.className = 'dropdown-item';
-        doneItem.href = '#';
-        doneItem.textContent = 'Выполнена';
-        doneItem.addEventListener('click', () => {
-            dropdownButton.textContent = 'Выполнена';
-            this.status = 'done';
-        });
-
-        dropdownMenu.appendChild(inProgressItem);
-        dropdownMenu.appendChild(doneItem);
-        dropdownButton.addEventListener('click', () => {
-            dropdownMenu.classList.toggle('show');
-        });
-        statusButton.appendChild(dropdownButton);
-        statusButton.appendChild(dropdownMenu);
+        statusButton.appendChild(checkbox);
+        statusButton.appendChild(label);
 
         return statusButton;
     }
-
 }

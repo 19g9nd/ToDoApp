@@ -1,9 +1,9 @@
 /* Set all odd items to a different color (zebra-stripes) */
-.task:nth-child(odd) {
+.TaskElement:nth-child(odd) {
     background: #f9f9f9;
 }
 
-.task {
+.TaskElement {
     background: #eee;
 }
 
