@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cb578a1c-5121-4fb3-bffb-7854bd4422c4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Classes/Task.js" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/Task.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/TaskManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/TaskManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.md" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.md" afterDir="false" />
+    <list default="true" id="cb578a1c-5121-4fb3-bffb-7854bd4422c4" name="Changes" comment="Add 404 page, change the task class">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/404page.html" beforeDir="false" afterPath="$PROJECT_DIR$/404page.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,8 +51,17 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1697558405819</updated>
-      <workItem from="1697558407374" duration="4998000" />
+      <workItem from="1697558407374" duration="5307000" />
     </task>
+    <task id="LOCAL-00001" summary="Add 404 page, change the task class">
+      <option name="closed" value="true" />
+      <created>1697563600832</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1697563600832</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -71,5 +77,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Add 404 page, change the task class" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add 404 page, change the task class" />
   </component>
 </project>
