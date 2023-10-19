@@ -5,16 +5,12 @@ class Task {
     #creationDate;
     #completionStatus;
     constructor(title, description, status = false) {
-        if (!this.isValid(title, description)){
-            alert('Задача не может быть добавлена. Пожалуйста, заполните название и описание задачи.');
-            return; // Передаем title и description в isValid
-        }
         this.#id = function(){
             return Date.now().toString(36) + Math.random().toString(36).substr(2);
         };
         this.#title = title;
         this.#description = description;
-        this.#creationDate = (new Date());
+        this.#creationDate = new Date();
         this.#completionStatus = status;
     }
     getId() {
@@ -52,14 +48,8 @@ class Task {
     set completionStatus(value) {
         this.#completionStatus = value;
     }
-    isValid(title, description) {
-        return (
-            title.trim() !== '' &&
-            description.trim() !== '' //&&
-            // this.isValidDate(this.#creationDate)
 
-        );
-    }
+
 
     isValidDate(date) {
         const datePattern = /^(\d{2})[./](\d{2})[./](\d{4}) (\d{2}:\d{2}:\d{2})$/;

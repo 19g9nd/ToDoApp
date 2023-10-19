@@ -1,6 +1,8 @@
 class TaskManager {
     #tasks = [];
     constructor() {
+        this.#tasks = this.loadTasksFromLocalStorage(); // Загрузижение задач из localStorage
+        this.renderTasks(); // Перерисовывание задач на странице
         console.log(this.loadTasksFromLocalStorage());
 
     }
@@ -44,9 +46,12 @@ class TaskManager {
         const tasksContainer = document.querySelector('#taskList');
         tasksContainer.innerHTML = '';
 
-        this.#tasks.forEach((task) => {
+        this.#tasks.forEach((taskData) => { // taskData вместо task
+            // экземпляр класса Task на основе данных из localStorage
+            const task = new Task(taskData.title, taskData.description, taskData.completionStatus);
             const taskElement = task.createTaskElement();
             tasksContainer.appendChild(taskElement);
         });
+
     }
 }

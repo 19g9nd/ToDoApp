@@ -7,14 +7,16 @@ document.querySelector('#taskAddButton').addEventListener('click', () => {
     const taskTitle = taskTitleInput.value;
     const taskDescription = taskDescriptionInput.value;
 
-    const newTask = new Task(taskTitle, taskDescription);
-    taskManager.addTask(newTask);
-
-// Очищаем поля ввода
-    taskTitleInput.value = '';
-    taskDescriptionInput.value = '';
-    taskManager.renderTasks();
-
+    if (!taskTitle || !taskDescription) {
+        alert('Задача не может быть добавлена. Пожалуйста, заполните название и описание задачи.');
+    } else {
+        const newTask = new Task(taskTitle, taskDescription);
+        taskManager.addTask(newTask);
+        // Очищаем поля ввода
+        taskTitleInput.value = '';
+        taskDescriptionInput.value = '';
+        taskManager.renderTasks();
+    }
 });
 
 document.querySelector('form').addEventListener('submit', (e) => {
