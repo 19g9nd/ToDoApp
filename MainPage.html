@@ -17,6 +17,20 @@
     <div class="row">
         <div class="col-6" id="taskList">
             <h2>Список задач</h2>
+            <div id="filterSortControls">
+                <div>
+                    <button id="filterAll">Все</button>
+                    <button id="filterInProgress">В процессе</button>
+                    <button id="filterDone">Выполненные</button>
+                </div>
+                <div>
+                    <label for="sortSelect">Сортировка:</label>
+                    <select id="sortSelect">
+                        <option value="name">По имени</option>
+                        <option value="date">По дате</option>
+                    </select>
+                </div>
+            </div>
             <!-- Здесь будут отображаться задачи -->
 
         </div>

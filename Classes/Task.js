@@ -5,7 +5,10 @@ class Task {
     #creationDate;
     #completionStatus;
     constructor(title, description, status = false) {
-        if (!this.isValid(title, description)) return; // Передаем title и description в isValid
+        if (!this.isValid(title, description)){
+            alert('Задача не может быть добавлена. Пожалуйста, заполните название и описание задачи.');
+            return; // Передаем title и description в isValid
+        }
         this.#id = function(){
             return Date.now().toString(36) + Math.random().toString(36).substr(2);
         };
@@ -14,7 +17,41 @@ class Task {
         this.#creationDate = (new Date());
         this.#completionStatus = status;
     }
+    getId() {
+        return this.#id();
+    }
 
+    getTitle() {
+        return this.#title;
+    }
+
+    getDescription() {
+        return this.#description;
+    }
+
+    getCreationDate() {
+        return this.#creationDate;
+    }
+
+    getCompletionStatus() {
+        return this.#completionStatus;
+    }
+
+    set title(value) {
+        this.#title = value;
+    }
+
+    set description(value) {
+        this.#description = value;
+    }
+
+    set creationDate(value) {
+        this.#creationDate = value;
+    }
+
+    set completionStatus(value) {
+        this.#completionStatus = value;
+    }
     isValid(title, description) {
         return (
             title.trim() !== '' &&
@@ -32,7 +69,7 @@ class Task {
     createTaskElement(){
         const taskElement =  document.createElement('div');
         taskElement.className = 'TaskElement';
-        taskElement.setAttribute('data-status', this.#completionStatus); // По умолчанию - "В процессе"
+        //taskElement.setAttribute('data-status', this.#completionStatus); // По умолчанию - "В процессе" (не работает)
         // Создаем элементы для названия, описания и других данных задачи
         const taskTitle = document.createElement('h3');
         taskTitle.textContent = this.#title;
