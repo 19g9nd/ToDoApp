@@ -5,16 +5,14 @@ class Task {
     #creationDate;
     #completionStatus;
     constructor(title, description, status = false) {
-        this.#id = function(){
-            return Date.now().toString(36) + Math.random().toString(36).substr(2);
-        };
+        this.#id = Date.now().toString(36) + Math.random().toString(36).substr(2);
         this.#title = title;
         this.#description = description;
         this.#creationDate = new Date();
         this.#completionStatus = status;
     }
     getId() {
-        return this.#id();
+        return this.#id;
     }
 
     getTitle() {
@@ -51,11 +49,6 @@ class Task {
 
 
 
-    isValidDate(date) {
-        const datePattern = /^(\d{2})[./](\d{2})[./](\d{4}) (\d{2}:\d{2}:\d{2})$/;
-        return datePattern.test(date);
-    }
-
     createTaskElement(){
         const taskElement =  document.createElement('div');
         taskElement.className = 'TaskElement';
@@ -79,6 +72,14 @@ class Task {
         const deleteButton = document.createElement('button');
         deleteButton.className = 'btn btn-sm btn-danger delete-task';
         deleteButton.textContent = 'Удалить';
+        // Обработчик события для удаления задачи
+        deleteButton.addEventListener('click', () => {
+            console.log('Button clicked');
+            const taskId = this.getId(); // ID задачи
+            console.log(taskId);
+            taskManager.deleteTask(taskId);
+            console.log(taskManager.getTasks());
+        });
 
         // Добавляем элементы в задачу
         taskElement.appendChild(taskTitle);
@@ -112,4 +113,6 @@ class Task {
 
         return statusButton;
     }
+
+
 }

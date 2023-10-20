@@ -1,6 +1,7 @@
 const taskManager = new TaskManager();
 
 document.querySelector('#taskAddButton').addEventListener('click', () => {
+    console.log('Add button clicked'); // Debug line
     const taskTitleInput = document.querySelector('#taskTitle');
     const taskDescriptionInput = document.querySelector('#taskDescription');
 
