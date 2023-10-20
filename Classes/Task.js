@@ -1,33 +1,51 @@
-class Task {
+class ToJson {
+    toJSON() {
+        const jsonable = {};
+
+        for (const key of arguments) {
+            jsonable[key] = this[key];
+        }
+
+        return jsonable;
+    }
+}
+
+
+class Task extends ToJson {
     #id;
     #title;
     #description;
     #creationDate;
     #completionStatus;
     constructor(title, description, status = false) {
+        super();
         this.#id = Date.now().toString(36) + Math.random().toString(36).substr(2);
         this.#title = title;
         this.#description = description;
         this.#creationDate = new Date();
         this.#completionStatus = status;
     }
-    getId() {
+
+    toJSON() {
+        return super.toJSON('id','title', 'description','creationDate', 'completionStatus');
+    }
+    get id() {
         return this.#id;
     }
 
-    getTitle() {
+    get title() {
         return this.#title;
     }
 
-    getDescription() {
+    get description() {
         return this.#description;
     }
 
-    getCreationDate() {
+    get creationDate() {
         return this.#creationDate;
     }
 
-    getCompletionStatus() {
+    get completionStatus() {
         return this.#completionStatus;
     }
 
