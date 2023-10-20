@@ -35,7 +35,7 @@ getTasks(){
        // this.saveTasksToLocalStorage();
     }
     filterByInProgress() {
-        return this.#tasks.filter(task => task.getCompletionStatus() === false);
+      return this.#tasks.filter(task => task.getCompletionStatus() === false);
     }
 
     filterByDone() {
