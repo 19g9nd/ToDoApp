@@ -20,6 +20,19 @@ document.querySelector('#taskAddButton').addEventListener('click', () => {
     }
 });
 
+const sortSelect = document.querySelector('#sortSelect');
+sortSelect.addEventListener('change', () => {
+    const selectedSortOption = sortSelect.value;
+    if (selectedSortOption === 'name') {
+        taskManager.sortByName();
+    } else if (selectedSortOption === 'date') {
+        taskManager.sortByDate();
+    }
+
+    taskManager.renderTasks(); // Перерисовываем задачи после сортировки
+});
+
+
 document.querySelector('form').addEventListener('submit', (e) => {
     e.preventDefault(); // Предотвращаем отправку формы
 });

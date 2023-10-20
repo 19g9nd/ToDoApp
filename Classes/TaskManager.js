@@ -43,13 +43,15 @@ getTasks(){
     }
 
     sortByName() {
-        this.#tasks.sort((a, b) => {
-            const nameA = a.name.toLowerCase();
-            const nameB = b.name.toLowerCase();
+        const sortedTasks = [...this.#tasks]; // Создаем копию массива задач
+        sortedTasks.sort((a, b) => {
+            const nameA = a.getTitle().toLowerCase();
+            const nameB = b.getTitle().toLowerCase();
             if (nameA < nameB) return -1;
             if (nameA > nameB) return 1;
             return 0;
         });
+        this.#tasks = sortedTasks; // Присваиваем отсортированный массив обратно
     }
 
     sortByDate() {
