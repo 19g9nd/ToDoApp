@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="cb578a1c-5121-4fb3-bffb-7854bd4422c4" name="Changes" comment="add sort">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/Task.js" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/Task.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/TaskManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/TaskManager.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -64,6 +66,9 @@
       <workItem from="1697745439380" duration="2645000" />
       <workItem from="1697789611576" duration="2368000" />
       <workItem from="1697806134138" duration="4317000" />
+      <workItem from="1697833490198" duration="1310000" />
+      <workItem from="1697878942485" duration="575000" />
+      <workItem from="1697886693429" duration="3430000" />
     </task>
     <task id="LOCAL-00001" summary="Add 404 page, change the task class">
       <option name="closed" value="true" />

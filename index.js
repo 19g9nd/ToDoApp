@@ -22,6 +22,7 @@ document.querySelector('#taskAddButton').addEventListener('click', () => {
 
 const sortSelect = document.querySelector('#sortSelect');
 sortSelect.addEventListener('change', () => {
+    debugger;
     const selectedSortOption = sortSelect.value;
     if (selectedSortOption === 'name') {
         taskManager.sortByName();
@@ -31,23 +32,23 @@ sortSelect.addEventListener('change', () => {
 
     taskManager.renderTasks(); // Перерисовываем задачи после сортировки
 });
-//
-// const done = document.querySelector('#filterDone')
-// done.addEventListener('click',()=> {
-//     console.log('done clicked');
-//      // Фильтруем выполненные задачи
-//    taskManager.filterByDone();
-//
-// })
-//
-//
-// const inProgress = document.querySelector('#filterInProgress')
-// inProgress.addEventListener('click',()=> {
-//     console.log('inProgress clicked');
-//     // Фильтруем выполненные задачи
-//     taskManager.filterByInProgress();
-//
-// })
+
+const done = document.querySelector('#filterDone')
+done.addEventListener('click',()=> {
+    console.log('done clicked');
+     // Фильтруем выполненные задачи
+   taskManager.filterByDone();
+
+})
+
+
+const inProgress = document.querySelector('#filterInProgress')
+inProgress.addEventListener('click',()=> {
+    console.log('inProgress clicked');
+    // Фильтруем выполненные задачи
+    taskManager.filterByInProgress();
+
+})
 document.querySelector('form').addEventListener('submit', (e) => {
     e.preventDefault(); // Предотвращаем отправку формы
 });

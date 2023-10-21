@@ -11,7 +11,7 @@ class TaskManager {
         const storedTasks = localStorage.getItem('TASKS');
         return JSON.parse(storedTasks) || [];
     }
-getTasks(){
+get Tasks(){
         return this.#tasks;
 }
 
@@ -23,32 +23,32 @@ getTasks(){
     }
     deleteTask(taskId) {
         // Find the index of the task with the matching ID
-        const taskIndex = this.#tasks.findIndex(task => task.getId() === taskId);
+        const taskIndex = this.#tasks.findIndex(task => task.id === taskId);
         this.#tasks.splice(taskIndex, 1);
-        this.saveTasksToLocalStorage(); // Save the updated tasks
+        this.saveTasksToLocalStorage();
         this.renderTasks();
 
     }
 
     addTask(task) {
-        this.#tasks.push(task);
+        this.#tasks.push(task)
         console.log(this.#tasks);
         // После добавления задачи, сохраняем обновленный список в localStorage
         this.saveTasksToLocalStorage();
     }
     filterByInProgress() {
-      return this.#tasks.filter(task => task.getCompletionStatus() === false);
+      return this.#tasks.filter(task => task.completionStatus === false);
     }
 
     filterByDone() {
-        return this.#tasks.filter(task => task.getCompletionStatus() === true);
+        return this.#tasks.filter(task => task.completionStatus === true);
     }
 
     sortByName() {
         const sortedTasks = [...this.#tasks]; // Создаем копию массива задач
         sortedTasks.sort((a, b) => {
-            const nameA = a.getTitle().toLowerCase();
-            const nameB = b.getTitle().toLowerCase();
+            const nameA = a.title.toLowerCase();
+            const nameB = b.title.toLowerCase();
             if (nameA < nameB) return -1;
             if (nameA > nameB) return 1;
             return 0;
@@ -56,23 +56,26 @@ getTasks(){
         this.#tasks = sortedTasks; // Присваиваем отсортированный массив обратно
     }
 
+
     sortByDate() {
-        this.#tasks.sort((a, b) => b.getCreationDate() - a.getCreationDate());
+        this.#tasks.sort((a, b) => b.creationDate - a.creationDate);
     }
 
     renderTasks() {
         const tasksContainer = document.querySelector('#taskList');
-         tasksContainer.innerHTML = '';
-        // this.#tasks.forEach((task) => {
-        //     const taskElement = task.createTaskElement();
-        //     tasksContainer.appendChild(taskElement);
-        // });
-        this.#tasks.forEach((taskData) => { // taskData вместо task
-            // экземпляр класса Task на основе данных из localStorage
-            const task = new Task(taskData.title, taskData.description, taskData.completionStatus);
+        tasksContainer.innerHTML = '';
+
+        this.#tasks.forEach((taskData) => {
+            let task = this.#tasks.find(t => t.id === taskData.id);
+            if (!task) {
+                // Если задачи с данным ID еще нет в массиве, создаем новый экземпляр
+                task = new Task(taskData.title, taskData.description, taskData.completionStatus);
+                this.#tasks.push(task); // Добавляем его в массив задач
+            }
+
             const taskElement = task.createTaskElement();
             tasksContainer.appendChild(taskElement);
         });
-
     }
+
 }

@@ -93,10 +93,10 @@ class Task extends ToJson {
         // Обработчик события для удаления задачи
         deleteButton.addEventListener('click', () => {
             console.log('Button clicked');
-            const taskId = this.getId(); // ID задачи
+            const taskId = this.#id; // ID задачи
             console.log(taskId);
             taskManager.deleteTask(taskId);
-            console.log(taskManager.getTasks());
+            console.log(taskManager.Tasks);
         });
 
         // Добавляем элементы в задачу
