@@ -22,7 +22,6 @@ document.querySelector('#taskAddButton').addEventListener('click', () => {
 
 const sortSelect = document.querySelector('#sortSelect');
 sortSelect.addEventListener('change', () => {
-    debugger;
     const selectedSortOption = sortSelect.value;
     if (selectedSortOption === 'name') {
         taskManager.sortByName();
@@ -43,6 +42,7 @@ done.addEventListener('click',()=> {
 const all = document.querySelector('#filterAll')
 
 all.addEventListener('click',()=>{
+    console.log('All clicked');
    taskManager.filterByAll();
 })
 

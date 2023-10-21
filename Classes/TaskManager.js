@@ -31,38 +31,22 @@ get Tasks(){
     }
 
     addTask(task) {
-        this.#tasks.push(task)
-        console.log(this.#tasks);
-        // После добавления задачи, сохраняем обновленный список в localStorage
+        // Преобразуйте creationDate в строку перед добавлением в localStorage
+        task.creationDate = task.creationDate.toISOString();
+        this.#tasks.push(task);
         this.saveTasksToLocalStorage();
+        console.log(this.#tasks);
     }
-    updateTaskList(tasks) {
-        const tasksContainer = document.querySelector('#taskList');
-        tasksContainer.innerHTML = '';
 
-        tasks.forEach((taskData) => {
-            let task = this.#tasks.find(t => t.id === taskData.id);
-            if (!task) {
-                // Если задачи с данным ID еще нет в массиве, создаем новый экземпляр
-                task = new Task(taskData.title, taskData.description, taskData.completionStatus);
-                this.#tasks.push(task); // Добавляем его в массив задач
-            }
 
-            const taskElement = task.createTaskElement();
-            tasksContainer.appendChild(taskElement);
-        });
-    }
     filterByInProgress() {
         const filteredTasks = this.#tasks.filter(task => task.completionStatus === false);
-        this.updateTaskList(filteredTasks);
     }
     filterByAll() {
-        const filteredTasks = this.#tasks.filter(task => task.completionStatus === true |task.completionStatus === false );
-        this.updateTaskList(filteredTasks);
+        const filteredTasks = this.#tasks.filter(task => task.completionStatus === true || task.completionStatus === false);
     }
     filterByDone() {
         const filteredTasks = this.#tasks.filter(task => task.completionStatus === true);
-        this.updateTaskList(filteredTasks);
     }
     sortByName() {
         const sortedTasks = [...this.#tasks]; // Создаем копию массива задач
@@ -78,24 +62,31 @@ get Tasks(){
 
 
     sortByDate() {
-        this.#tasks.sort((a, b) => b.creationDate - a.creationDate);
+        // Создаем временную копию массива задач для сортировки
+        const sortedTasks = [...this.#tasks];
+        sortedTasks.sort((a, b) => b.creationDate - a.creationDate);
+
+        // Обновляем интерфейс с отсортированными задачами
+        this.renderTasks(sortedTasks);
+
+        // Сохраняем отсортированный массив в localStorage
+        this.#tasks = sortedTasks;
+        this.saveTasksToLocalStorage();
     }
 
     renderTasks() {
         const tasksContainer = document.querySelector('#taskList');
         tasksContainer.innerHTML = '';
-
         this.#tasks.forEach((taskData) => {
-            let task = this.#tasks.find(t => t.id === taskData.id);
-            if (!task) {
-                // Если задачи с данным ID еще нет в массиве, создаем новый экземпляр
-                task = new Task(taskData.title, taskData.description, taskData.completionStatus);
-                this.#tasks.push(task); // Добавляем его в массив задач
-            }
+            // Преобразуйте creationDate из строки обратно в объект Date
+            taskData.creationDate = new Date(taskData.creationDate);
 
+            // Создайте экземпляр класса Task на основе данных из localStorage
+            const task = new Task(taskData.title, taskData.description, taskData.completionStatus, taskData.creationDate);
             const taskElement = task.createTaskElement();
             tasksContainer.appendChild(taskElement);
         });
+
     }
 
 }

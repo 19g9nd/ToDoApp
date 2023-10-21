@@ -17,12 +17,12 @@ class Task extends ToJson {
     #description;
     #creationDate;
     #completionStatus;
-    constructor(title, description, status = false) {
+    constructor(title, description, status = false, creationDate) {
         super();
         this.#id = Date.now().toString(36) + Math.random().toString(36).substr(2);
         this.#title = title;
         this.#description = description;
-        this.#creationDate = new Date();
+        this.#creationDate = creationDate || new Date(); // Используйте переданную дату или создайте новую
         this.#completionStatus = status;
     }
 
