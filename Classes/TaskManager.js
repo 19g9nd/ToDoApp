@@ -36,14 +36,34 @@ get Tasks(){
         // После добавления задачи, сохраняем обновленный список в localStorage
         this.saveTasksToLocalStorage();
     }
+    updateTaskList(tasks) {
+        const tasksContainer = document.querySelector('#taskList');
+        tasksContainer.innerHTML = '';
+
+        tasks.forEach((taskData) => {
+            let task = this.#tasks.find(t => t.id === taskData.id);
+            if (!task) {
+                // Если задачи с данным ID еще нет в массиве, создаем новый экземпляр
+                task = new Task(taskData.title, taskData.description, taskData.completionStatus);
+                this.#tasks.push(task); // Добавляем его в массив задач
+            }
+
+            const taskElement = task.createTaskElement();
+            tasksContainer.appendChild(taskElement);
+        });
+    }
     filterByInProgress() {
-      return this.#tasks.filter(task => task.completionStatus === false);
+        const filteredTasks = this.#tasks.filter(task => task.completionStatus === false);
+        this.updateTaskList(filteredTasks);
     }
-
+    filterByAll() {
+        const filteredTasks = this.#tasks.filter(task => task.completionStatus === true |task.completionStatus === false );
+        this.updateTaskList(filteredTasks);
+    }
     filterByDone() {
-        return this.#tasks.filter(task => task.completionStatus === true);
+        const filteredTasks = this.#tasks.filter(task => task.completionStatus === true);
+        this.updateTaskList(filteredTasks);
     }
-
     sortByName() {
         const sortedTasks = [...this.#tasks]; // Создаем копию массива задач
         sortedTasks.sort((a, b) => {

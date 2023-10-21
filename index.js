@@ -40,7 +40,11 @@ done.addEventListener('click',()=> {
    taskManager.filterByDone();
 
 })
+const all = document.querySelector('#filterAll')
 
+all.addEventListener('click',()=>{
+   taskManager.filterByAll();
+})
 
 const inProgress = document.querySelector('#filterInProgress')
 inProgress.addEventListener('click',()=> {
