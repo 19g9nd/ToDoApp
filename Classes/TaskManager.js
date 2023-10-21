@@ -41,12 +41,17 @@ get Tasks(){
 
     filterByInProgress() {
         const filteredTasks = this.#tasks.filter(task => task.completionStatus === false);
+        this.renderTasks(filteredTasks);
     }
     filterByAll() {
         const filteredTasks = this.#tasks.filter(task => task.completionStatus === true || task.completionStatus === false);
+        this.renderTasks(filteredTasks);
     }
     filterByDone() {
+        //bug completionStatus не передается правильно
+        console.log(this.#tasks);
         const filteredTasks = this.#tasks.filter(task => task.completionStatus === true);
+        this.renderTasks(filteredTasks);
     }
     sortByName() {
         const sortedTasks = [...this.#tasks]; // Создаем копию массива задач
@@ -74,10 +79,10 @@ get Tasks(){
         this.saveTasksToLocalStorage();
     }
 
-    renderTasks() {
+    renderTasks(tasksToDisplay = this.#tasks) {
         const tasksContainer = document.querySelector('#taskList');
         tasksContainer.innerHTML = '';
-        this.#tasks.forEach((taskData) => {
+        tasksToDisplay.forEach((taskData) => {
             // Преобразуйте creationDate из строки обратно в объект Date
             taskData.creationDate = new Date(taskData.creationDate);
 
