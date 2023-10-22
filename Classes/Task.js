@@ -1,3 +1,4 @@
+import taskManager from "../index.js";
 class ToJson {
     toJSON() {
         const jsonable = {};
@@ -11,7 +12,7 @@ class ToJson {
 }
 
 
-class Task extends ToJson {
+export class Task extends ToJson {
     #id;
     #title;
     #description;
@@ -70,19 +71,19 @@ class Task extends ToJson {
     createTaskElement(){
         const taskElement =  document.createElement('div');
         taskElement.className = 'TaskElement';
-        //taskElement.setAttribute('data-status', this.#completionStatus); // По умолчанию - "В процессе" (не работает)
+
+        taskElement.setAttribute('data-task-id', this.#id); // Устанавливаем значение атрибута data-task-id равным ID задачи
         // Создаем элементы для названия, описания и других данных задачи
         const taskTitle = document.createElement('h3');
         taskTitle.textContent = this.#title;
-
+        taskTitle.className = 'taskTitle';
         const taskDescription = document.createElement('p');
         taskDescription.textContent = this.#description;
-
+        taskDescription.className = 'taskDescription';
         const taskDate = document.createElement('p');
         taskDate.textContent = 'Дата создания: ' + this.#creationDate.toLocaleString();
-
+        taskDate.className = 'taskDate';
         const statusButton = this.createStatusButton(); // Функция для создания кнопки статуса
-
         const editButton = document.createElement('button');
         editButton.className = 'btn btn-sm btn-primary edit-task';
         editButton.textContent = 'Редактировать';
@@ -114,17 +115,8 @@ class Task extends ToJson {
         const statusButton = document.createElement('div');
         statusButton.className = 'btn-group';
 
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.checked = this.#completionStatus;
-
-        const label = document.createElement('label');
-        label.textContent = this.#completionStatus ? 'Выполнена' : 'В процессе';
-
-        checkbox.addEventListener('change', () => {
-            this.#completionStatus = checkbox.checked;
-            label.textContent = checkbox.checked ? 'Выполнена' : 'В процессе';
-        });
+        const checkbox = this.createCheckbox();
+        const label = this.createStatusLabel(checkbox);
 
         statusButton.appendChild(checkbox);
         statusButton.appendChild(label);
@@ -132,5 +124,27 @@ class Task extends ToJson {
         return statusButton;
     }
 
+    createCheckbox() {
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = this.#completionStatus;
 
+
+        checkbox.addEventListener('click', function() {
+            this.completionStatus = this.checked;
+            const taskElement = this.closest('.TaskElement');
+            taskElement.setAttribute('data-status', this.completionStatus ? 'Done' : 'In-progress');
+        }.bind(checkbox));
+
+
+        return checkbox;
+    }
+
+    createStatusLabel(checkbox) {
+        const label = document.createElement('label');
+        label.textContent = checkbox.checked ? 'Выполнена' : 'В процессе';
+        label.className = 'status';
+
+        return label;
+    }
 }

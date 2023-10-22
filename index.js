@@ -1,3 +1,4 @@
+import TaskManager from "./Classes/TaskManager.js";
 const taskManager = new TaskManager();
 
 document.querySelector('#taskAddButton').addEventListener('click', () => {
@@ -35,15 +36,15 @@ sortSelect.addEventListener('change', () => {
 const done = document.querySelector('#filterDone')
 done.addEventListener('click',()=> {
     console.log('done clicked');
-     // Фильтруем выполненные задачи
-   taskManager.filterByDone();
+    // Фильтруем выполненные задачи
+    taskManager.filterByDone();
 
 })
 const all = document.querySelector('#filterAll')
 
 all.addEventListener('click',()=>{
     console.log('All clicked');
-   taskManager.filterByAll();
+    taskManager.filterByAll();
 })
 
 const inProgress = document.querySelector('#filterInProgress')
@@ -57,3 +58,24 @@ document.querySelector('form').addEventListener('submit', (e) => {
     e.preventDefault(); // Предотвращаем отправку формы
 });
 
+const taskElements = document.querySelectorAll('.taskElement');
+
+taskElements.forEach(taskElement =>  {
+    const taskId = taskElement.getAttribute('data-task-id'); // айдишник задачи
+});
+// document.querySelectorAll('.taskTitle').forEach(taskTitle => {
+//     taskTitle.addEventListener('click', () => {
+//         const taskId = taskTitle.parentElement.getAttribute('data-task-id');
+//         window.location.href = `details.html?id=${taskId}`;
+//     })
+// });
+
+document.querySelector('#taskList').addEventListener('click', (e) => {
+    const taskTitle = e.target.closest('.taskTitle');
+    if (taskTitle) {
+        const taskId = taskTitle.parentElement.getAttribute('data-task-id');
+        window.location.href = `details.html?id=${taskId}`;
+    }
+});
+
+export default taskManager;
