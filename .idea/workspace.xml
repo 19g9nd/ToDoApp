@@ -4,14 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cb578a1c-5121-4fb3-bffb-7854bd4422c4" name="Changes" comment="Fix localstorage error on reloading">
+    <list default="true" id="cb578a1c-5121-4fb3-bffb-7854bd4422c4" name="Changes" comment="add regex,styles">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Classes/Task.js" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/Task.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Classes/TaskManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/TaskManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/details.html" beforeDir="false" afterPath="$PROJECT_DIR$/details.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/details.js" beforeDir="false" afterPath="$PROJECT_DIR$/details.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/main.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +18,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="JavaScript File" />
         <option value="CSS File" />
       </list>
     </option>
@@ -88,7 +86,7 @@
       <workItem from="1697991156050" duration="254000" />
       <workItem from="1697991421084" duration="1483000" />
       <workItem from="1698004156427" duration="732000" />
-      <workItem from="1698061311197" duration="2089000" />
+      <workItem from="1698061311197" duration="7673000" />
     </task>
     <task id="LOCAL-00001" summary="Add 404 page, change the task class">
       <option name="closed" value="true" />
@@ -154,7 +152,15 @@
       <option name="project" value="LOCAL" />
       <updated>1697908686499</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="add regex,styles">
+      <option name="closed" value="true" />
+      <created>1698063719131</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1698063719131</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -180,6 +186,7 @@
     <MESSAGE value="fix sort,localstorage" />
     <MESSAGE value="add filters" />
     <MESSAGE value="Fix localstorage error on reloading" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix localstorage error on reloading" />
+    <MESSAGE value="add regex,styles" />
+    <option name="LAST_COMMIT_MESSAGE" value="add regex,styles" />
   </component>
 </project>

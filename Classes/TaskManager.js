@@ -27,7 +27,6 @@ export default class TaskManager {
         localStorage.setItem('TASKS', jsonStr);
     }
     deleteTask(taskId) {
-        // Find the index of the task with the matching ID
         const taskIndex = this.#tasks.findIndex(task => task.id === taskId);
         this.#tasks.splice(taskIndex, 1);
         this.saveTasksToLocalStorage();
@@ -38,7 +37,8 @@ export default class TaskManager {
 
     addTask(task) {
         // Преобразуйте creationDate в строку перед добавлением в localStorage
-        task.creationDate = task.creationDate.toLocaleString();
+        task.creationDate = task.creationDate.toISOString();
+
         this.#tasks.push(task);
         this.saveTasksToLocalStorage();
         console.log(this.#tasks);
@@ -46,19 +46,17 @@ export default class TaskManager {
 
 
     filterByInProgress() {
-        const filteredTasks = this.#tasks.filter(task => task.completionStatus === false);
+        const filteredTasks = this.#tasks.filter(task => !task.completionStatus);
         this.renderTasks(filteredTasks);
     }
-    filterByAll() {
-        const filteredTasks = this.#tasks.filter(task => task.completionStatus === true || task.completionStatus === false);
-        this.renderTasks(filteredTasks);
-    }
+
     filterByDone() {
-        //bug completionStatus не передается правильно
-        debugger;
-        console.log(this.#tasks);
-        const filteredTasks = this.#tasks.filter(task => task.completionStatus === true);
+        const filteredTasks = this.#tasks.filter(task => task.completionStatus);
         this.renderTasks(filteredTasks);
+    }
+
+    filterByAll() {
+        this.renderTasks(this.#tasks);
     }
     sortByName() {
         const sortedTasks = [...this.#tasks]; // Создаем копию массива задач

@@ -9,16 +9,16 @@ document.querySelector('#taskAddButton').addEventListener('click', () => {
 
     const taskTitle = taskTitleInput.value;
     const taskDescription = taskDescriptionInput.value;
-
+    debugger;
     if (!Validator.validateName(taskTitle)) {
         alert('Название задачи должно содержать минимум 2 слова и не содержать только цифры.');
         return;
     }
 
-    if (!Validator.validateDescription(taskDescription, taskTitle)) {
-        alert('Подробное описание задачи не может совпадать с названием.');
-        return;
-    }
+    // if (!Validator.validateDescription(taskDescription, taskTitle)) {
+    //     //alert('Подробное описание задачи не может совпадать с названием.');
+    //     return;
+    // }
 
     const newTask = new Task(taskTitle, taskDescription);
     taskManager.addTask(newTask);

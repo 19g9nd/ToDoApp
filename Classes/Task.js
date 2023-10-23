@@ -1,4 +1,4 @@
-import taskManager from "../index.js";
+import TaskManager from "./TaskManager.js";
 class ToJson {
     toJSON() {
         const jsonable = {};
@@ -10,6 +10,7 @@ class ToJson {
         return jsonable;
     }
 }
+
 export class Validator {
     static validCharacters = /^[a-zA-Zа-яА-Я0-9]+$/;
 
@@ -17,22 +18,27 @@ export class Validator {
 
     static wordLength = /^.{1,16}$/;
 
-    static validName = /^(?![ ])[a-zA-Zа-яА-Я0-9 ]{1,16}[^ ]$/;
+    static validName = /^(?! )[a-zA-Zа-яА-Я0-9]+(?: [a-zA-Zа-яА-Я0-9]+)+[^ ]$/;
 
-    static validDescription = /^(?![ ])(?![a-zA-Zа-яА-Я0-9 ]*$).+$/;
+    static validDescription = /^(?! )(?![a-zA-Zа-яА-Я0-9 ]*$).+$/;
 
     static validateName(name) {
-        return Validator.validName.test(name);
-    }
-
-    static validateDescription(description, name) {
-        return !Validator.isOnlyWhitespace(description) && description.trim() !== name;
+        if (Validator.validName.test(name)) {
+            if (!/^\s/.test(name) && !/\s$/.test(name)) {
+                const words = name.trim().split(' ');
+                if (words.length >= 2) {
+                    if (!words.every(word => /^\d+$/.test(word))) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     static isOnlyWhitespace(str) {
         return /^\s*$/.test(str);
     }
-
 
     static validateWord(word) {
         return Validator.wordCategory.test(word);
@@ -53,20 +59,24 @@ export class Task extends ToJson {
     #description;
     #creationDate;
     #completionStatus;
+
     constructor(title, description, status = false, creationDate) {
         super();
-        this.#id =  this.generateUniqueId();
+        this.#id = this.generateUniqueId();
         this.#title = title;
         this.#description = description;
-        this.#creationDate = creationDate || new Date(); // Используйте переданную дату или создайте новую
+        this.#creationDate = creationDate || new Date();
         this.#completionStatus = status;
     }
+
     generateUniqueId() {
         return Date.now().toString(36) + Math.random().toString(36).substr(2);
     }
+
     toJSON() {
-        return super.toJSON('id','title', 'description','creationDate', 'completionStatus');
+        return super.toJSON('id', 'title', 'description', 'creationDate', 'completionStatus');
     }
+
     get id() {
         return this.#id;
     }
@@ -107,20 +117,24 @@ export class Task extends ToJson {
         this.#id = value;
     }
 
-    createTaskElement(){
-        const taskElement =  document.createElement('div');
+    createTaskElement() {
+        const taskElement = document.createElement('div');
         taskElement.className = 'TaskElement';
-        // Создаем элементы для названия, описания и других данных задачи
+
         const taskTitle = document.createElement('h3');
         taskTitle.textContent = this.#title;
         taskTitle.className = 'taskTitle';
+
         const taskDescription = document.createElement('p');
         taskDescription.textContent = this.#description;
         taskDescription.className = 'taskDescription';
+
         const taskDate = document.createElement('p');
         taskDate.textContent = 'Дата создания: ' + this.#creationDate.toLocaleString();
         taskDate.className = 'taskDate';
-        const statusButton = this.createStatusButton(); // Функция для создания кнопки статуса
+
+        const statusButton = this.createStatusButton();
+
         const editButton = document.createElement('button');
         editButton.className = 'btn btn-sm btn-primary edit-task';
         editButton.textContent = 'Редактировать';
@@ -128,30 +142,32 @@ export class Task extends ToJson {
         const deleteButton = document.createElement('button');
         deleteButton.className = 'btn btn-sm btn-danger delete-task';
         deleteButton.textContent = 'Удалить';
-        // Обработчик события для удаления задачи
+
         deleteButton.addEventListener('click', () => {
-            console.log('Button clicked');
-            const taskId = this.#id; // ID задачи
-            console.log(taskId);
+            const taskId = this.#id;
             taskManager.deleteTask(taskId);
-            console.log(taskManager.Tasks);
+        });
+
+        editButton.addEventListener('click', () => {
+            const taskId = this.#id;
+            window.location.href = `edit.html?id=${taskId}`;
         });
 
         taskTitle.addEventListener('click', () => {
-            console.log('title clicked');
-            const taskId = this.#id; // Use the ID property of the Task instance
-            console.log(taskId);
-             window.location.href = `details.html?id=${taskId}`;
+            const taskId = this.#id;
+            window.location.href = `details.html?id=${taskId}`;
         });
-        
 
-        // Добавляем элементы в задачу
+        const status = this.#completionStatus ? 'Done' : 'In-progress';
+        taskElement.setAttribute('data-status', status);
+
         taskElement.appendChild(taskTitle);
         taskElement.appendChild(taskDescription);
         taskElement.appendChild(taskDate);
         taskElement.appendChild(statusButton);
         taskElement.appendChild(editButton);
         taskElement.appendChild(deleteButton);
+
         return taskElement;
     }
 
@@ -160,10 +176,7 @@ export class Task extends ToJson {
         statusButton.className = 'btn-group';
 
         const checkbox = this.createCheckbox();
-        const label = this.createStatusLabel(checkbox);
-
         statusButton.appendChild(checkbox);
-        statusButton.appendChild(label);
 
         return statusButton;
     }
@@ -171,26 +184,16 @@ export class Task extends ToJson {
     createCheckbox() {
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
-    
-        checkbox.addEventListener('click', function() {
-            const taskElement = this.closest('.TaskElement');
-            if (taskElement) {
-                const isChecked = this.checked;
-                taskElement.setAttribute('data-status', isChecked ? 'Done' : 'In-progress');
 
-                //taskManager.renderTasks();
+        checkbox.addEventListener('click', () => {
+            const taskElement = checkbox.closest('.TaskElement');
+            if (taskElement) {
+                const isChecked = checkbox.checked;
+                taskElement.setAttribute('data-status', isChecked ? 'Done' : 'In-progress');
             }
         });
-    
+
         return checkbox;
     }
-    
-    createStatusLabel(checkbox) {
-        const label = document.createElement('label');
-        label.textContent = checkbox.checked ? 'Выполнена' : 'В процессе';
-        label.className = 'status';
-
-        return label;
-    }
-    
 }
+
