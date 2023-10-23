@@ -1,5 +1,5 @@
 import TaskManager from "./Classes/TaskManager.js";
-import { Task } from "./Classes/Task.js";
+import {Task, Validator} from "./Classes/Task.js";
 const taskManager = new TaskManager();
 
 document.querySelector('#taskAddButton').addEventListener('click', () => {
@@ -10,17 +10,24 @@ document.querySelector('#taskAddButton').addEventListener('click', () => {
     const taskTitle = taskTitleInput.value;
     const taskDescription = taskDescriptionInput.value;
 
-    if (!taskTitle || !taskDescription) {
-        alert('Задача не может быть добавлена. Пожалуйста, заполните название и описание задачи.');
-    } else {
-        const newTask = new Task(taskTitle, taskDescription);
-        taskManager.addTask(newTask);
-        // Очищаем поля ввода
-        taskTitleInput.value = '';
-        taskDescriptionInput.value = '';
-        taskManager.renderTasks();
+    if (!Validator.validateName(taskTitle)) {
+        alert('Название задачи должно содержать минимум 2 слова и не содержать только цифры.');
+        return;
     }
+
+    if (!Validator.validateDescription(taskDescription, taskTitle)) {
+        alert('Подробное описание задачи не может совпадать с названием.');
+        return;
+    }
+
+    const newTask = new Task(taskTitle, taskDescription);
+    taskManager.addTask(newTask);
+    // Очищаем поля ввода
+    taskTitleInput.value = '';
+    taskDescriptionInput.value = '';
+    taskManager.renderTasks();
 });
+
 
 const sortSelect = document.querySelector('#sortSelect');
 sortSelect.addEventListener('change', () => {
@@ -58,18 +65,5 @@ inProgress.addEventListener('click',()=> {
 document.querySelector('form').addEventListener('submit', (e) => {
     e.preventDefault(); // Предотвращаем отправку формы
 });
-
-const taskElements = document.querySelectorAll('.taskElement');
-
-taskElements.forEach(taskElement =>  {
-    const taskId = taskElement.getAttribute('id'); // айдишник задачи
-});
-// document.querySelectorAll('.taskTitle').forEach(taskTitle => {
-//     taskTitle.addEventListener('click', () => {
-//         const taskId = taskTitle.parentElement.getAttribute('data-task-id');
-//         window.location.href = `details.html?id=${taskId}`;
-//     })
-// });
-
 
 export default taskManager;

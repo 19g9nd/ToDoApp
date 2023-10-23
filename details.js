@@ -23,5 +23,5 @@ if (taskIndex !== -1) { // Check if the task was found
     taskListContainer.innerHTML = "";
     taskListContainer.appendChild(taskElement);
 } else {
-    //window.location ='./404.html'
+    window.location ='./404.html'
 }

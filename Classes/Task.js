@@ -10,7 +10,42 @@ class ToJson {
         return jsonable;
     }
 }
+export class Validator {
+    static validCharacters = /^[a-zA-Zа-яА-Я0-9]+$/;
 
+    static wordCategory = /^(?:[a-zA-Z]+|[а-яА-Я]+|\d+)$/;
+
+    static wordLength = /^.{1,16}$/;
+
+    static validName = /^(?![ ])[a-zA-Zа-яА-Я0-9 ]{1,16}[^ ]$/;
+
+    static validDescription = /^(?![ ])(?![a-zA-Zа-яА-Я0-9 ]*$).+$/;
+
+    static validateName(name) {
+        return Validator.validName.test(name);
+    }
+
+    static validateDescription(description, name) {
+        return !Validator.isOnlyWhitespace(description) && description.trim() !== name;
+    }
+
+    static isOnlyWhitespace(str) {
+        return /^\s*$/.test(str);
+    }
+
+
+    static validateWord(word) {
+        return Validator.wordCategory.test(word);
+    }
+
+    static validateWordLength(word) {
+        return Validator.wordLength.test(word);
+    }
+
+    static validateCharacters(str) {
+        return Validator.validCharacters.test(str);
+    }
+}
 
 export class Task extends ToJson {
     #id;
@@ -101,7 +136,7 @@ export class Task extends ToJson {
             taskManager.deleteTask(taskId);
             console.log(taskManager.Tasks);
         });
-        //BUG id doesnt match localstorage
+
         taskTitle.addEventListener('click', () => {
             console.log('title clicked');
             const taskId = this.#id; // Use the ID property of the Task instance
@@ -142,7 +177,7 @@ export class Task extends ToJson {
             if (taskElement) {
                 const isChecked = this.checked;
                 taskElement.setAttribute('data-status', isChecked ? 'Done' : 'In-progress');
-                 // Вызов функции для перерисовки задач, по идее должно менять статус
+
                 //taskManager.renderTasks();
             }
         });

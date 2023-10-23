@@ -1,9 +1,52 @@
-/* Set all odd items to a different color (zebra-stripes) */
+.TaskElement {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+transition: background-color 0.3s ease;
+}
+
 .TaskElement:nth-child(odd) {
     background: #f9f9f9;
 }
 
-.TaskElement {
-    background: #eee;
+
+.TaskElement:hover {
+    background-color: #f0f0f0;
 }
 
+#addForm {
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+#taskTitle {
+    margin-bottom: 10px;
+}
+
+#taskDescription {
+    margin-bottom: 10px;
+}
+
+#taskAddButton {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+
+transition: background-color 0.3s ease;
+}
+
+#taskAddButton:hover {
+    background-color: #0056b3;
+}
+label {
+    margin-bottom: 0;
+}

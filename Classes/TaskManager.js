@@ -1,4 +1,4 @@
-import { Task } from "./Task.js";
+import {Task} from "./Task.js";
 
 export default class TaskManager {
     #tasks = [];
@@ -10,12 +10,11 @@ export default class TaskManager {
     // Метод для загрузки задач из localStorage
     loadTasksFromLocalStorage() {
         const storedTasks = JSON.parse(localStorage.getItem('TASKS')) || [];
-        const loaded = storedTasks.map((task) => {
-          const loadedTask = new Task(task.title, task.description, task.completionStatus, new Date(task.creationDate));
-          loadedTask.id = task.id; // Set the id property separately
-          return loadedTask;
+        return storedTasks.map((task) => {
+            const loadedTask = new Task(task.title, task.description, task.completionStatus, new Date(task.creationDate));
+            loadedTask.id = task.id;
+            return loadedTask;
         });
-        return loaded;
       }
     get Tasks(){
         return this.#tasks;
@@ -39,7 +38,7 @@ export default class TaskManager {
 
     addTask(task) {
         // Преобразуйте creationDate в строку перед добавлением в localStorage
-        task.creationDate = task.creationDate.toISOString();
+        task.creationDate = task.creationDate.toLocaleString();
         this.#tasks.push(task);
         this.saveTasksToLocalStorage();
         console.log(this.#tasks);
@@ -74,17 +73,12 @@ export default class TaskManager {
     }
 
     sortByDate() {
-        // Создаем временную копию массива задач для сортировки
         const sortedTasks = [...this.#tasks];
-        sortedTasks.sort((a, b) => b.creationDate - a.creationDate);
-
-        // Обновляем интерфейс с отсортированными задачами
-        this.renderTasks(sortedTasks);
-
-        // Сохраняем отсортированный массив в localStorage
+        sortedTasks.sort((a, b) => b.creationDate.getTime() - a.creationDate.getTime());
         this.#tasks = sortedTasks;
-        this.saveTasksToLocalStorage();
     }
+
+
     renderTasks(tasksToDisplay = this.#tasks) {
         const tasksContainer = document.querySelector('#taskList');
         tasksContainer.innerHTML = '';
