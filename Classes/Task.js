@@ -20,13 +20,15 @@ export class Task extends ToJson {
     #completionStatus;
     constructor(title, description, status = false, creationDate) {
         super();
-        this.#id = Date.now().toString(36) + Math.random().toString(36).substr(2);
+        this.#id =  this.generateUniqueId();
         this.#title = title;
         this.#description = description;
         this.#creationDate = creationDate || new Date(); // Используйте переданную дату или создайте новую
         this.#completionStatus = status;
     }
-
+    generateUniqueId() {
+        return Date.now().toString(36) + Math.random().toString(36).substr(2);
+    }
     toJSON() {
         return super.toJSON('id','title', 'description','creationDate', 'completionStatus');
     }
@@ -66,13 +68,13 @@ export class Task extends ToJson {
         this.#completionStatus = value;
     }
 
-
+    set id(value) {
+        this.#id = value;
+    }
 
     createTaskElement(){
         const taskElement =  document.createElement('div');
         taskElement.className = 'TaskElement';
-
-        taskElement.setAttribute('data-task-id', this.#id); // Устанавливаем значение атрибута data-task-id равным ID задачи
         // Создаем элементы для названия, описания и других данных задачи
         const taskTitle = document.createElement('h3');
         taskTitle.textContent = this.#title;
@@ -99,6 +101,14 @@ export class Task extends ToJson {
             taskManager.deleteTask(taskId);
             console.log(taskManager.Tasks);
         });
+        //BUG id doesnt match localstorage
+        taskTitle.addEventListener('click', () => {
+            console.log('title clicked');
+            const taskId = this.#id; // Use the ID property of the Task instance
+            console.log(taskId);
+             window.location.href = `details.html?id=${taskId}`;
+        });
+        
 
         // Добавляем элементы в задачу
         taskElement.appendChild(taskTitle);
@@ -107,7 +117,6 @@ export class Task extends ToJson {
         taskElement.appendChild(statusButton);
         taskElement.appendChild(editButton);
         taskElement.appendChild(deleteButton);
-
         return taskElement;
     }
 
@@ -127,19 +136,20 @@ export class Task extends ToJson {
     createCheckbox() {
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
-        checkbox.checked = this.#completionStatus;
-
-
+    
         checkbox.addEventListener('click', function() {
-            this.completionStatus = this.checked;
             const taskElement = this.closest('.TaskElement');
-            taskElement.setAttribute('data-status', this.completionStatus ? 'Done' : 'In-progress');
-        }.bind(checkbox));
-
-
+            if (taskElement) {
+                const isChecked = this.checked;
+                taskElement.setAttribute('data-status', isChecked ? 'Done' : 'In-progress');
+                 // Вызов функции для перерисовки задач, по идее должно менять статус
+                //taskManager.renderTasks();
+            }
+        });
+    
         return checkbox;
     }
-
+    
     createStatusLabel(checkbox) {
         const label = document.createElement('label');
         label.textContent = checkbox.checked ? 'Выполнена' : 'В процессе';
@@ -147,4 +157,5 @@ export class Task extends ToJson {
 
         return label;
     }
+    
 }

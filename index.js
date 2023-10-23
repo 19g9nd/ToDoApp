@@ -1,4 +1,5 @@
 import TaskManager from "./Classes/TaskManager.js";
+import { Task } from "./Classes/Task.js";
 const taskManager = new TaskManager();
 
 document.querySelector('#taskAddButton').addEventListener('click', () => {
@@ -61,7 +62,7 @@ document.querySelector('form').addEventListener('submit', (e) => {
 const taskElements = document.querySelectorAll('.taskElement');
 
 taskElements.forEach(taskElement =>  {
-    const taskId = taskElement.getAttribute('data-task-id'); // айдишник задачи
+    const taskId = taskElement.getAttribute('id'); // айдишник задачи
 });
 // document.querySelectorAll('.taskTitle').forEach(taskTitle => {
 //     taskTitle.addEventListener('click', () => {
@@ -70,12 +71,5 @@ taskElements.forEach(taskElement =>  {
 //     })
 // });
 
-document.querySelector('#taskList').addEventListener('click', (e) => {
-    const taskTitle = e.target.closest('.taskTitle');
-    if (taskTitle) {
-        const taskId = taskTitle.parentElement.getAttribute('data-task-id');
-        window.location.href = `details.html?id=${taskId}`;
-    }
-});
 
 export default taskManager;

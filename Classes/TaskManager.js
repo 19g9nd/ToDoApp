@@ -6,13 +6,17 @@ export default class TaskManager {
         this.#tasks = this.loadTasksFromLocalStorage(); // Загрузижение задач из localStorage
         this.renderTasks(); // Перерисовывание задач на странице
         console.log(this.loadTasksFromLocalStorage());
-
     }
     // Метод для загрузки задач из localStorage
     loadTasksFromLocalStorage() {
-        const storedTasks = localStorage.getItem('TASKS');
-        return JSON.parse(storedTasks) || [];
-    }
+        const storedTasks = JSON.parse(localStorage.getItem('TASKS')) || [];
+        const loaded = storedTasks.map((task) => {
+          const loadedTask = new Task(task.title, task.description, task.completionStatus, new Date(task.creationDate));
+          loadedTask.id = task.id; // Set the id property separately
+          return loadedTask;
+        });
+        return loaded;
+      }
     get Tasks(){
         return this.#tasks;
     }
@@ -31,6 +35,7 @@ export default class TaskManager {
         this.renderTasks();
 
     }
+    
 
     addTask(task) {
         // Преобразуйте creationDate в строку перед добавлением в localStorage
@@ -67,12 +72,6 @@ export default class TaskManager {
         });
         this.#tasks = sortedTasks; // Присваиваем отсортированный массив обратно
     }
-    showDetails(){
-        this.#tasks.forEach(task, () =>{
-           const taskId = task.title.getAttribute('data-task-id');
-            window.location.href = `details.html?id=${taskId}`;
-        })
-    }
 
     sortByDate() {
         // Создаем временную копию массива задач для сортировки
@@ -86,35 +85,10 @@ export default class TaskManager {
         this.#tasks = sortedTasks;
         this.saveTasksToLocalStorage();
     }
-
-   
-    // showTaskDetails(){
-    //     const task = this.#tasks.find(task=>task.id ===taskId);
-    //     if(!task)  window.location.href = '404page.html';
-    //     // Отобразите информацию о задаче на странице подробной информации
-    //     document.getElementById('detailsTaskTitle').textContent = task.title;
-    //     document.getElementById('detailsTaskDescription').textContent = task.description;
-    //     document.getElementById('detailsTaskCreationDate').textContent = 'Дата создания: ' + task.creationDate.toLocaleString();
-    //     document.getElementById('detailsTaskCompletionStatus').textContent = task.completionStatus ? 'Выполнена' : 'В процессе';
-    //     //если нажали на кнопку вернуться на галвную страницу
-    //     document.getElementById('detailsBackButton').addEventListener('click'), () => {
-    //         // Перенаправьте пользователя на главную страницу
-    //         window.location.href = './MainPage.html';
-
-    //     }
-
-    // }
-
     renderTasks(tasksToDisplay = this.#tasks) {
         const tasksContainer = document.querySelector('#taskList');
         tasksContainer.innerHTML = '';
-        tasksToDisplay.forEach((taskData) => {
-            const task = new Task(
-                taskData.title,
-                taskData.description,
-                taskData.completionStatus,
-                taskData.creationDate
-            );
+        tasksToDisplay.forEach((task) => {
             const taskElement = task.createTaskElement();
             tasksContainer.appendChild(taskElement);
         });

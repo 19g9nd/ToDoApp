@@ -4,10 +4,8 @@ document.getElementById('detailsBackButton').addEventListener('click', () => {
 });
 // Get the task ID from the URL
 const taskId = new URL(window.location.href).searchParams.get("id");
-debugger;
 // Retrieve tasks from local storage
 const storedTasks = JSON.parse(localStorage.getItem('TASKS')) || [];
-// Find the task by its ID
 const taskIndex = storedTasks.findIndex(task => task.id === taskId);
 if (taskIndex !== -1) { // Check if the task was found
     const task = storedTasks[taskIndex];
@@ -25,5 +23,5 @@ if (taskIndex !== -1) { // Check if the task was found
     taskListContainer.innerHTML = "";
     taskListContainer.appendChild(taskElement);
 } else {
-    window.location ='./404.html'
+    //window.location ='./404.html'
 }
