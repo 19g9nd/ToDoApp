@@ -1,4 +1,3 @@
-// Add an event listener to the "Вернуться на главную страницу" button
 document.getElementById('detailsBackButton').addEventListener('click', () => {
     window.location.href = './MainPage.html';
 });

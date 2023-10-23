@@ -35,10 +35,11 @@ export class Validator {
         }
         return false;
     }
-
-    static isOnlyWhitespace(str) {
-        return /^\s*$/.test(str);
+    static validDescription(description) {
+        if (!Validator.validDescription.test(description)) {
+            alert("Описание не валидно")
     }
+}
 
     static validateWord(word) {
         return Validator.wordCategory.test(word);
