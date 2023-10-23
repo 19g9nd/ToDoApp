@@ -1,4 +1,4 @@
-import TaskManager from "./TaskManager.js";
+import taskManager from "../index.js";
 class ToJson {
     toJSON() {
         const jsonable = {};
@@ -23,22 +23,37 @@ export class Validator {
     static validDescription = /^(?! )(?![a-zA-Zа-яА-Я0-9 ]*$).+$/;
 
     static validateName(name) {
-        if (Validator.validName.test(name)) {
-            if (!/^\s/.test(name) && !/\s$/.test(name)) {
-                const words = name.trim().split(' ');
-                if (words.length >= 2) {
-                    if (!words.every(word => /^\d+$/.test(word))) {
-                        return true;
-                    }
-                }
-            }
+        if (!name) {
+            alert("Title cannot be empty.");
+            return false;
         }
+    
+        const words = name.trim().split(' ');
+        if (words.length < 2) {
+            alert("Название должно содержать минимум 2 слова..");
+            return false;
+        }
+    
+        if (words.every(word => /^\d+$/.test(word))) {
+            alert("Название не может состоять только из цифр.");
+            return false;
+        }
+    
+        return true;
+    }
+    
+
+    static validateDescription(description, title) {
+        // if (!Validator.validDescription.test(description)) {
+        //     alert("описание не валидно");
+        //     return false;
+        // } 
+
+     if (description == title){
+        alert("Название и описание не может быть одинаковым!");
         return false;
     }
-    static validDescription(description) {
-        if (!Validator.validDescription.test(description)) {
-            alert("Описание не валидно")
-    }
+    return true;
 }
 
     static validateWord(word) {

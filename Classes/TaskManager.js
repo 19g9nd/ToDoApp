@@ -1,4 +1,4 @@
-import {Task} from "./Task.js";
+import {Task, Validator} from "./Task.js";
 
 export default class TaskManager {
     #tasks = [];
@@ -22,7 +22,6 @@ export default class TaskManager {
 
     // Метод для сохранения задач в localStorage
     saveTasksToLocalStorage() {
-        // debugger;
         const jsonStr = JSON.stringify(this.#tasks);
         localStorage.setItem('TASKS', jsonStr);
     }
@@ -36,6 +35,14 @@ export default class TaskManager {
     
 
     addTask(task) {
+
+        if (!Validator.validateName(task.title)) {
+            return;
+        }
+    
+        if (!Validator.validateDescription(task.description, task.title)) {
+            return;
+        }
         // Преобразуйте creationDate в строку перед добавлением в localStorage
         task.creationDate = task.creationDate.toISOString();
 
